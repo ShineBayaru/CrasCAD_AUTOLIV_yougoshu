@@ -8,7 +8,20 @@ import { MOCK_TERMS, TRANSLATIONS } from './constants';
 import { Category, Term } from './types';
 
 const App: React.FC = () => {
-  const [terms, setTerms] = useState<Term[]>(MOCK_TERMS);
+  // Initialize state from localStorage if available, otherwise use MOCK_TERMS
+  const [terms, setTerms] = useState<Term[]>(() => {
+    const savedTerms = localStorage.getItem('crascad_terms');
+    if (savedTerms) {
+      try {
+        return JSON.parse(savedTerms);
+      } catch (e) {
+        console.error("Failed to parse saved terms", e);
+        return MOCK_TERMS;
+      }
+    }
+    return MOCK_TERMS;
+  });
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category | 'ALL'>('ALL');
   const [selectedTerm, setSelectedTerm] = useState<Term | null>(null);
@@ -17,6 +30,11 @@ const App: React.FC = () => {
   // Modal State
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTerm, setEditingTerm] = useState<Term | null>(null);
+
+  // Save to localStorage whenever terms change
+  useEffect(() => {
+    localStorage.setItem('crascad_terms', JSON.stringify(terms));
+  }, [terms]);
 
   // Filter logic
   const filteredTerms = useMemo(() => {
