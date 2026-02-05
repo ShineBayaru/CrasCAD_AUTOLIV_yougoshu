@@ -79,6 +79,9 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
     fileInputRef.current?.click();
   };
 
+  // Explicit dark background class for inputs to avoid white-on-white issues
+  const inputClass = "w-full bg-black/50 border border-tech-border focus:border-tech-blue/50 rounded px-3 py-2 text-sm text-gray-200 font-mono focus:outline-none focus:ring-1 focus:ring-tech-blue/50 placeholder-gray-600";
+
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
@@ -110,7 +113,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-tech-800/40 border border-tech-blue/30 focus:border-tech-blue rounded px-3 py-2 text-sm text-tech-text font-mono focus:outline-none focus:ring-1 focus:ring-tech-blue placeholder-tech-muted"
+                className="w-full bg-black/50 border border-tech-blue/30 focus:border-tech-blue rounded px-3 py-2 text-sm text-gray-200 font-mono focus:outline-none focus:ring-1 focus:ring-tech-blue placeholder-tech-muted"
                 placeholder={t.ENTER_NAME}
               />
             </div>
@@ -126,7 +129,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
                 type="text"
                 value={formData.term}
                 onChange={(e) => setFormData({...formData, term: e.target.value})}
-                className="w-full bg-tech-800/20 border border-tech-border focus:border-tech-blue/50 rounded px-3 py-2 text-sm text-tech-text font-mono focus:outline-none focus:ring-1 focus:ring-tech-blue/50"
+                className={inputClass}
                 placeholder={`${t.EXAMPLE}: 射出成形`}
               />
             </div>
@@ -137,7 +140,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
                 type="text"
                 value={formData.reading}
                 onChange={(e) => setFormData({...formData, reading: e.target.value})}
-                className="w-full bg-tech-800/20 border border-tech-border focus:border-tech-blue/50 rounded px-3 py-2 text-sm text-tech-text font-mono focus:outline-none focus:ring-1 focus:ring-tech-blue/50"
+                className={inputClass}
                 placeholder={`${t.EXAMPLE}: しゃしゅつせいけい`}
               />
             </div>
@@ -156,8 +159,8 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
                     onClick={() => toggleCategory(cat)}
                     className={`relative text-[10px] px-2 py-2 rounded border font-mono transition-all duration-200 text-left flex items-center justify-between
                       ${isSelected 
-                        ? 'bg-tech-blue/20 border-tech-blue text-tech-text shadow-[0_0_10px_rgba(0,240,255,0.2)]' 
-                        : 'bg-tech-800/20 border-tech-border text-tech-muted hover:border-tech-text/30 hover:text-tech-text'
+                        ? 'bg-tech-blue/20 border-tech-blue text-gray-200 shadow-[0_0_10px_rgba(0,240,255,0.2)]' 
+                        : 'bg-black/30 border-tech-border text-tech-muted hover:border-gray-500 hover:text-gray-300'
                       }`}
                   >
                     <span className="truncate mr-1">{displayLabel}</span>
@@ -176,7 +179,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
                 type="text"
                 value={formData.english}
                 onChange={(e) => setFormData({...formData, english: e.target.value})}
-                className="w-full bg-tech-800/20 border border-tech-border focus:border-tech-blue/50 rounded px-3 py-2 text-sm text-tech-text font-mono focus:outline-none focus:ring-1 focus:ring-tech-blue/50"
+                className={inputClass}
                 placeholder={`${t.EXAMPLE}: Injection Molding`}
               />
             </div>
@@ -186,7 +189,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
                 type="text"
                 value={formData.alias}
                 onChange={(e) => setFormData({...formData, alias: e.target.value})}
-                className="w-full bg-tech-800/20 border border-tech-border focus:border-tech-blue/50 rounded px-3 py-2 text-sm text-tech-text font-mono focus:outline-none focus:ring-1 focus:ring-tech-blue/50"
+                className={inputClass}
                 placeholder={`${t.EXAMPLE}: インジェクション`}
               />
             </div>
@@ -199,7 +202,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
               rows={4}
               value={formData.meaning}
               onChange={(e) => setFormData({...formData, meaning: e.target.value})}
-              className="w-full bg-tech-800/20 border border-tech-border focus:border-tech-blue/50 rounded px-3 py-2 text-sm text-tech-text font-sans focus:outline-none focus:ring-1 focus:ring-tech-blue/50 resize-none"
+              className={`${inputClass} resize-none`}
               placeholder="..."
             />
           </div>
@@ -219,7 +222,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
 
              {/* Image Preview or Upload Controls */}
              {formData.imageUrl ? (
-               <div className="relative group rounded-lg overflow-hidden border border-tech-blue/50 bg-tech-800/50 mt-2">
+               <div className="relative group rounded-lg overflow-hidden border border-tech-blue/50 bg-black/50 mt-2">
                  <img 
                    src={formData.imageUrl} 
                    alt="Preview" 
@@ -242,7 +245,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
                  <button
                    type="button"
                    onClick={triggerFileUpload}
-                   className="w-full py-4 border border-dashed border-tech-blue/30 hover:border-tech-blue hover:bg-tech-blue/5 rounded flex flex-col items-center justify-center gap-2 transition-all group"
+                   className="w-full py-4 border border-dashed border-tech-blue/30 hover:border-tech-blue hover:bg-tech-blue/5 rounded flex flex-col items-center justify-center gap-2 transition-all group bg-black/30"
                  >
                    <Upload className="w-6 h-6 text-tech-muted group-hover:text-tech-blue transition-colors" />
                    <span className="text-xs text-tech-muted group-hover:text-tech-text font-mono uppercase tracking-widest">{t.UPLOAD_IMAGE}</span>
@@ -255,13 +258,13 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
                  </div>
 
                  {/* URL Input Fallback */}
-                 <div className="flex items-center space-x-2 bg-tech-800/20 border border-tech-border rounded px-2">
+                 <div className="flex items-center space-x-2 bg-black/50 border border-tech-border rounded px-2">
                    <Image className="w-4 h-4 text-tech-muted" />
                    <input 
                      type="text"
                      value={formData.imageUrl || ''}
                      onChange={(e) => setFormData({...formData, imageUrl: e.target.value})}
-                     className="w-full bg-transparent border-none text-sm text-tech-text font-mono focus:ring-0 py-2 placeholder-tech-muted"
+                     className="w-full bg-transparent border-none text-sm text-gray-200 font-mono focus:ring-0 py-2 placeholder-gray-600"
                      placeholder={`${t.IMAGE_URL} (https://...)`}
                    />
                  </div>
@@ -273,7 +276,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ initialData, onSav
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-tech-border hover:bg-tech-text/5 text-tech-muted hover:text-tech-text text-xs font-mono uppercase tracking-widest transition-colors rounded"
+              className="px-4 py-2 border border-tech-border hover:bg-white/5 text-tech-muted hover:text-white text-xs font-mono uppercase tracking-widest transition-colors rounded"
             >
               {t.CANCEL}
             </button>
